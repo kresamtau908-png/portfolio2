@@ -64,9 +64,10 @@
 4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右に波紋パネル（`RipplePanel.tsx`、人物写真は使わない方針のため採用。詳細は本ファイル下部「写真枠の方針」参照）。
 5. **ScrollQuote** (`ScrollQuote.tsx`): 「できることを、ひとつずつ増やしてきました。」を表示。高さ180vh（giats版の260vhから短縮）。テキストは画面中央にsticky固定。各単語は手前側（やや大きく・ぼやけた状態）から出現し、スクロールに連動して縮小・鮮明化しながら定位置へ収まる（初期状態は完全に不可視）。**Quiet Strengthのトーンに合わせて散らばり距離・ぼかし量・拡大率を大幅に控えめ**に調整済み（giats版の半分以下の強度）。
 6. **Skills** (`Skills.tsx`): 「02 SKILLS」。HTML/CSS/JavaScript/TypeScript/React/Tailwind CSS/Git・GitHub/Figmaを2カラムのナンバリングリストで表示。スクロールで軽いscale+blur+fadeイン（giats版の吊り下げバッジより大幅に控えめ）。
-7. **Works** (`Works.tsx`, 旧Projects): 「03 WORKS」。作品ごとに「吊り下げ式IDバッジ」（作品カラー・ストラップ・控えめなswayアニメーション、`WorkBadge.tsx`）＋近くに浮かぶ「クリーム色のメモカード」（タイトル・説明・タグ、装飾なしのフラットな見た目、`WorkNoteCard.tsx`）を左右交互に配置。giats.me再現時のClientsセクションの構成をWorks用に復活・再調整したもの（色はQuiet Strengthパレットに合わせたMuted Blue/Warm Taupe/Deep Navy系の3色、揺れの角度も控えめに縮小）。
-   - バッジは社員証の「写真」部分に完成ページのスクリーンショットを貼り付けられる構造（`WorkBadge.tsx`の`image`prop、下部にカラーのネームプレート）。`image`未指定時はプレースホルダーアイコン表示。
-   - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**（`Works.tsx`の`WORKS`配列、`image: '/images/works/project-01.jpg'`のように指定）。
+7. **Works** (`Works.tsx`, 旧Projects): 「03 WORKS」。カード（`WorkSlideCard.tsx`、作品カラー＋画像＋タイトル＋タグ）が右から左へ**継続的に横スライドするマーキー**（`animate-works-scroll`、32s linear infinite、ホバーで一時停止）。配列を2セット並べて継ぎ目なくループ。
+   - 2026-09-24: 従来の「吊り下げ式IDバッジ＋クリームのメモカード」（`WorkBadge.tsx` / `WorkNoteCard.tsx`）は giats.me のClientsセクションと酷似しすぎているとのフィードバックにより廃止。代わりに https://syuzgen.com/ のトップにあるスライド演出（`loop-track`クラスで横に流れるカード）を参考に、独自の配色・カード内容で再構築（両コンポーネントは削除済み）。
+   - カードの画像は`WorkSlideCard.tsx`の`image`prop（例: `/images/works/project-01.jpg`）。未指定時は「Coming soon」表示。
+   - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**。
 8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。見出し「大切にしていること。」＋THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
 9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真枠（`OrbitPanel.tsx`）・人柄紹介文（**氏名「Your Name」・紹介文はプレースホルダー、要差し替え**）。
 10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「丁寧に、向き合います。」＋ContactForm（Formspree連携済み: `xqpabozo`）。（2026-09-24: 見出しは元々「はじめの一歩を、一緒に。」だったが、「静かに」を多用している点も踏まえ変更）
@@ -81,7 +82,7 @@ Lenis慣性スクロール／RevealText（下から単語出現）／ScrollQuote
 
 - BackgroundScene（画面全体に漂うグラデーションブロブのcanvas背景）— Quiet Strengthのミニマル方針にそぐわないため削除
 - Heroの光る球体パネル演出 — 同上
-- Clientsセクションの「吊り下げ式IDバッジ」＋常時swayアニメーション — Skillsセクションへの転用は見送ったが、後日ユーザー指示によりWorksセクションへ復活・再調整して採用（`WorkBadge.tsx` / `WorkNoteCard.tsx`）
+- Clientsセクションの「吊り下げ式IDバッジ」＋常時swayアニメーション — Skillsセクションへの転用は見送り、一時Worksセクションへ採用したが、2026-09-24に「参考サイトと酷似しすぎている」とのフィードバックによりWorksからも廃止（横スライドのカードマーキーに置き換え。詳細はWorksの項目参照）
 - Footerの巨大ブランドワードマーク — 意味のないアクセントを避ける方針のため、タグライン程度の控えめな表現に変更
 - PillButton・見出しのuppercase強制 — 静かなトーンに合わせ通常表記に変更
 
