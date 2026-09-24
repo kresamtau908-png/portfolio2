@@ -4,8 +4,8 @@ interface ScrollQuoteProps {
   text: string
 }
 
-// Deterministic pseudo-random offset per word index, so each word always
-// scatters from the same starting point instead of re-randomizing on render.
+// Deterministic pseudo-random offset per character, so the layout always
+// starts from the same scatter instead of re-randomizing on render.
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 999) * 10000
   return x - Math.floor(x)
@@ -13,12 +13,12 @@ function seededRandom(seed: number) {
 
 export default function ScrollQuote({ text }: ScrollQuoteProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const words = text.split(' ')
+  // 日本語はスペースで区切られていないため、文字単位で分割する
+  const words = Array.from(text)
   const [progress, setProgress] = useState(0)
 
-  // each word drifts in gently from close to the viewer (slightly large +
-  // near), settling into its place as it comes into focus — kept subtle to
-  // match the "quiet" tone
+  // each character drifts in from close to the viewer (large + blurry),
+  // shrinking and sharpening into place as it settles
   const offsets = useMemo(
     () =>
       words.map((_, i) => {
@@ -52,15 +52,15 @@ export default function ScrollQuote({ text }: ScrollQuoteProps) {
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  // each word gets its own slice of the overall scroll progress, with
-  // overlapping bands so neighbouring words converge in a smooth wave
+  // each character gets its own slice of the overall scroll progress, with
+  // overlapping bands so neighbouring characters converge in a smooth wave
   const band = Math.min(0.16, 1.8 / words.length)
 
   return (
     <section ref={wrapperRef} className="relative h-[180vh] bg-cream">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-8 nav:px-[6vw]">
         <p className="text-h3 max-w-3xl text-center font-semibold">
-          {words.map((word, i) => {
+          {words.map((char, i) => {
             const start = (i / words.length) * (1 - band)
             const local = Math.min(1, Math.max(0, (progress - start) / band))
             const eased = 1 - Math.pow(1 - local, 3)
@@ -69,18 +69,16 @@ export default function ScrollQuote({ text }: ScrollQuoteProps) {
             const scale = 1 + inv * (offset.scale - 1)
 
             return (
-              <span key={`${word}-${i}`} className="inline-block">
-                <span
-                  className="inline-block will-change-transform"
-                  style={{
-                    opacity: eased,
-                    filter: `blur(${inv * 6}px)`,
-                    transform: `translate(${inv * offset.x}px, ${inv * offset.y}px) scale(${scale}) rotate(${inv * offset.rotate}deg)`,
-                  }}
-                >
-                  {word}
-                </span>
-                {i < words.length - 1 ? ' ' : ''}
+              <span
+                key={i}
+                className="inline-block will-change-transform"
+                style={{
+                  opacity: eased,
+                  filter: `blur(${inv * 6}px)`,
+                  transform: `translate(${inv * offset.x}px, ${inv * offset.y}px) scale(${scale}) rotate(${inv * offset.rotate}deg)`,
+                }}
+              >
+                {char === ' ' ? ' ' : char}
               </span>
             )
           })}

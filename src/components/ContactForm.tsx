@@ -48,9 +48,9 @@ export default function ContactForm() {
       </button>
 
       {status === 'error' && (
-        <p className="text-p-x text-cream/50">送信に失敗しました。時間をおいて再度お試しください。</p>
+        <p className="text-p-x text-cream/50">送信に失敗しました 時間をおいて再度お試しください</p>
       )}
-      {status === 'sent' && <p className="text-p-x text-lime">送信しました。ありがとうございます。</p>}
+      {status === 'sent' && <p className="text-p-x text-lime">送信しました ありがとうございます</p>}
     </form>
   )
 }

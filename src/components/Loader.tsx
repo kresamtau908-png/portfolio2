@@ -11,14 +11,17 @@ export default function Loader({ onDone }: LoaderProps) {
 
   useEffect(() => {
     const start = performance.now()
-    const duration = 1400
+    const duration = 2600
     let raf = 0
 
     const tick = (now: number) => {
       const elapsed = now - start
-      const pct = Math.min(100, Math.round((elapsed / duration) * 100))
+      const t = Math.min(1, elapsed / duration)
+      // ease-in cubic: 序盤はゆっくり、終盤で一気に追いつく（所要時間はdurationのまま変わらない）
+      const eased = t * t * t
+      const pct = Math.round(eased * 100)
       setProgress(pct)
-      if (pct >= 100) {
+      if (t >= 1) {
         setShowShort(true)
         setTimeout(() => setHidden(true), 350)
         setTimeout(onDone, 800)
@@ -43,7 +46,7 @@ export default function Loader({ onDone }: LoaderProps) {
               showShort ? '-translate-y-full' : 'translate-y-0'
             }`}
           >
-            {showShort ? '静かに、積み重ねる。' : 'Quiet Strength'}
+            {showShort ? '静かに積み重ねる' : 'Quiet Strength'}
           </h2>
         </div>
         <div className="absolute bottom-8 right-8 text-h2 tabular-nums">{progress}%</div>

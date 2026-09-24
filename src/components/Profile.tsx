@@ -1,4 +1,4 @@
-import OrbitPanel from './OrbitPanel'
+import PersonalityPanel from './PersonalityPanel'
 import RevealText from './RevealText'
 
 export default function Profile() {
@@ -6,7 +6,7 @@ export default function Profile() {
     <section id="profile" className="layout-grid bg-cream py-28 nav:py-[11vw]">
       <div className="col-span-6 nav:col-span-5">
         <div className="aspect-square overflow-hidden rounded-[0.6vw]">
-          <OrbitPanel className="h-full w-full" />
+          <PersonalityPanel className="h-full w-full" />
         </div>
       </div>
 
@@ -22,8 +22,8 @@ export default function Profile() {
         <p className="text-h5 font-normal text-ink/60">Front-end Developer</p>
         <p className="text-p-l max-w-xl text-ink/70">
           {/* TODO: 人柄が伝わる自己紹介文に差し替える */}
-          コツコツ積み上げることが得意です。分からないことは一つずつ丁寧に調べ、納得してから前に進むタイプです。
-          着実に前進することを大切にしています。
+          コツコツ積み上げることが得意です 分からないことは一つずつ丁寧に調べ 納得してから前に進むタイプです
+          着実に前進することを大切にしています
         </p>
       </div>
     </section>

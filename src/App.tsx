@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import About from './components/About'
 import Contact from './components/Contact'
-import CustomScrollbar from './components/CustomScrollbar'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -31,7 +30,6 @@ function App() {
       {loading && <Loader onDone={() => setLoading(false)} />}
 
       <div className="noise-overlay" />
-      <CustomScrollbar />
 
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
 
@@ -44,7 +42,7 @@ function App() {
         <main className={`relative transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}>
           <Hero />
           <About />
-          <ScrollQuote text="できることを、ひとつずつ増やしてきました。" />
+          <ScrollQuote text="できることをひとつずつ増やしてきました" />
           <Skills />
           <Works />
           <Philosophy />

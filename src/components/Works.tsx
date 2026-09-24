@@ -29,13 +29,13 @@ export default function Works() {
             <span className="text-p-x tracking-[0.2em] text-cream/50">WORKS</span>
           </div>
           <h2 className="text-h2 mt-4 nav:mt-[1vw]">
-            <RevealText text="つくったもの。" />
+            <RevealText text="つくったもの" />
           </h2>
         </div>
       </div>
 
-      <div className="group overflow-hidden">
-        <div className="animate-works-scroll flex w-max gap-8 nav:gap-[2vw]">
+      <div className="group overflow-hidden py-4 nav:py-[1vw]">
+        <div className="animate-works-scroll flex w-max gap-14 nav:gap-[5vw]">
           {TRACK.map((work, i) => (
             <WorkSlideCard
               key={`${work.no}-${i}`}

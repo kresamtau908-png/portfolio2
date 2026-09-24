@@ -42,7 +42,7 @@ export default function Skills() {
           <span className="text-p-x tracking-[0.2em] text-ink/50">SKILLS</span>
         </div>
         <h2 className="text-h2 mt-4 nav:mt-[1vw]">
-          <RevealText text="積み重ねてきた技術。" />
+          <RevealText text="積み重ねてきた技術" />
         </h2>
       </div>
 

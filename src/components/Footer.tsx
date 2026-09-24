@@ -46,7 +46,7 @@ export default function Footer() {
         >
           your@email.com
         </a>
-        <p className="text-p-l mt-6 max-w-xs text-cream/50">一歩ずつ学び、誠実に手を動かしています。</p>
+        <p className="text-p-l mt-6 max-w-xs text-cream/50">一歩ずつ学び誠実に手を動かしています</p>
       </div>
 
       <div className="col-span-6 mt-16 flex items-end justify-between nav:col-span-16 nav:mt-[5vw]">
