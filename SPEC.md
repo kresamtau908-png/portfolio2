@@ -1,0 +1,96 @@
+# サイト仕様書
+
+「Quiet Strength — 静かなる強さ」をコンセプトとしたポートフォリオサイト。
+（2026-09-18 に giats.me 再現版から全面リニューアル。動きの実装・技術基盤は giats.me 再現時のものを流用）
+このファイルは指示があるたびに追加・更新する。
+
+最終更新: 2026-09-24
+
+## コンセプト
+
+- Quiet Strength — 静かなる強さ／「静かに学び、丁寧につくる」
+- Design方針: Strong Grid × Generous White Space、Minimal & Meaningful、大きなタイポグラフィ、余白を大胆に、線・番号・アクセントは意味のあるものだけ、アニメーションは控えめだが意味を持たせる
+
+## 技術スタック
+
+- Vite + React + TypeScript
+- Tailwind CSS v4 (`@tailwindcss/vite`)
+- Lenis（慣性スムーズスクロール）
+- フォント: **Inter + Noto Sans JP**（Google Fonts、`index.html`でpreconnect+リンク）
+
+## カラー
+
+`src/index.css` の `@theme` でトークン化（Deep Navy × Warm White × Muted Blue）。
+
+- `--color-cream` (`#f7f4ee`) = Warm White（背景）
+- `--color-ink` (`#182338`) = Deep Navy（テキスト・ダークセクション背景）
+- `--color-accent` (`#fbfaf6`) = 明るいピル背景
+- `--color-lime` (`#7c93ac`) = Muted Blue（アクセント・ホバー時のボール展開色）
+
+## 全体ルール
+
+- **Git**: 自動でコミット・プッシュしない。ユーザーから明示的に指示があった場合のみ行う。
+- **リンク**: 現時点では全て `href="#"` + `preventDefault` で無効化（本番リンク未確定のため）。
+- **公開範囲**: 他者やGoogleにサイトを参照されないよう `robots.txt` と `noindex` メタタグで検索エンジン・クローラーをブロックする。Basic認証などのアクセス制限は不要。
+
+## お問い合わせ機能
+
+- **Formspree** を使用する。
+- Formspreeの直リンク（フォームのaction URLを直接embed）を使う方式。Vercelのサーバーレス関数等との連携は不要。
+- ステータス: **UI実装済み・エンドポイント未設定**。`src/components/ContactForm.tsx` の `FORMSPREE_ENDPOINT` がプレースホルダー。実際のエンドポイントURLを受け取り次第、1行差し替える。
+- Contactセクション（`src/components/Contact.tsx`）に設置。他セクションより見せ方を強め（大見出し＋ダーク背景）にしている。
+
+## レスポンシブ対応
+
+- PC・SP（スマートフォン）両対応。
+- ブレークポイント: `nav:` = 812px以上をPCレイアウトとする。
+
+## デプロイ方法
+
+- **Vercel** を使用する。
+- ステータス: **未実施**。ユーザーからの明示的な指示があった場合のみデプロイ作業を行う。
+
+## SEO / 公開範囲制御
+
+- ステータス: **実装済み**
+  - `public/robots.txt` で全クローラーを `Disallow: /`
+  - `index.html` に `<meta name="robots" content="noindex, nofollow">`
+
+## セクション構成・演出仕様（実装済み）
+
+1. **Loader** (`Loader.tsx`): 「Quiet Strength」→「静かに、積み重ねる。」切り替え＋0-100%カウンター。
+2. **Header** (`Header.tsx`): 固定ヘッダー、ロード完了後にフェードイン。「Portfolio」ロゴ／Contactピルボタン／Menuボタン。
+3. **Hero** (`Hero.tsx`): ミニマルな構成。アイコピー「FRONT-END DEVELOPER」＋大見出し「Quiet Strength」＋「静かに、積み重ねる。」。下部に控えめなScrollインジケーター（線が伸びるアニメーション）。過去のギラつく3Dパネル演出は削除。
+4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右にポートレート写真枠（`PhotoPlaceholder.tsx`、アイコン表示のプレースホルダー、要差し替え）。
+5. **ScrollQuote** (`ScrollQuote.tsx`): 「静かに学び、丁寧につくる。」を表示。高さ180vh（giats版の260vhから短縮）。テキストは画面中央にsticky固定。各単語は手前側（やや大きく・ぼやけた状態）から出現し、スクロールに連動して縮小・鮮明化しながら定位置へ収まる（初期状態は完全に不可視）。**Quiet Strengthのトーンに合わせて散らばり距離・ぼかし量・拡大率を大幅に控えめ**に調整済み（giats版の半分以下の強度）。
+6. **Skills** (`Skills.tsx`): 「02 SKILLS」。HTML/CSS/JavaScript/TypeScript/React/Tailwind CSS/Git・GitHub/Figmaを2カラムのナンバリングリストで表示。スクロールで軽いscale+blur+fadeイン（giats版の吊り下げバッジより大幅に控えめ）。
+7. **Works** (`Works.tsx`, 旧Projects): 「03 WORKS」。作品ごとに「吊り下げ式IDバッジ」（作品カラー・ストラップ・控えめなswayアニメーション、`WorkBadge.tsx`）＋近くに浮かぶ「クリーム色のメモカード」（タイトル・説明・タグ、装飾なしのフラットな見た目、`WorkNoteCard.tsx`）を左右交互に配置。giats.me再現時のClientsセクションの構成をWorks用に復活・再調整したもの（色はQuiet Strengthパレットに合わせたMuted Blue/Warm Taupe/Deep Navy系の3色、揺れの角度も控えめに縮小）。
+   - バッジは社員証の「写真」部分に完成ページのスクリーンショットを貼り付けられる構造（`WorkBadge.tsx`の`image`prop、下部にカラーのネームプレート）。`image`未指定時はプレースホルダーアイコン表示。
+   - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**（`Works.tsx`の`WORKS`配列、`image: '/images/works/project-01.jpg'`のように指定）。
+8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
+9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真・人柄紹介文（**氏名「Your Name」・写真（`PhotoPlaceholder.tsx`）・紹介文は全てプレースホルダー、要差し替え**）。
+10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「はじめの一歩を、一緒に。」＋ContactForm（Formspree連携、エンドポイント未設定）。
+11. **Footer** (`Footer.tsx`): Sitemap（Home/About/Skills/Works/Philosophy/Profile）／Follow（GitHub/X/Email、リンク先未設定）／Contact（メールアドレスはプレースホルダー）／タグライン／Go to topボタン。
+12. **メニューオーバーレイ** (`MenuOverlay.tsx`): 右からダークパネルがスライドイン。背景コンテンツは縮小＋角丸＋左シフト。Navigation／Followの2カラム構成。
+
+### 流用した動きの技術（giats.me再現時に実装したもの）
+
+Lenis慣性スクロール／RevealText（下から単語出現）／ScrollQuote（手前から集まり定位置に収まる、強度は控えめに調整）／ボタンホバーのボール展開／Footerリンクのホバー矢印／メニュー開閉時の背景縮小+角丸／カスタムスクロールバー／ヘッダーのフェードイン。
+
+### giats.me再現版から削除・不採用にしたもの
+
+- BackgroundScene（画面全体に漂うグラデーションブロブのcanvas背景）— Quiet Strengthのミニマル方針にそぐわないため削除
+- Heroの光る球体パネル演出 — 同上
+- Clientsセクションの「吊り下げ式IDバッジ」＋常時swayアニメーション — Skillsセクションへの転用は見送ったが、後日ユーザー指示によりWorksセクションへ復活・再調整して採用（`WorkBadge.tsx` / `WorkNoteCard.tsx`）
+- Footerの巨大ブランドワードマーク — 意味のないアクセントを避ける方針のため、タグライン程度の控えめな表現に変更
+- PillButton・見出しのuppercase強制 — 静かなトーンに合わせ通常表記に変更
+
+## 未確定・保留事項（要ユーザー入力）
+
+- Formspreeのフォームエンドポイント URL
+- Vercelデプロイのタイミング・ドメイン
+- Works（作品）の実際のコンテンツ・画像・下層ページ
+- Profileの氏名・写真・紹介文
+- Footer/メニューのSNS・メールの実リンク先
+- About/Profileセクションのポートレート写真（現在はアイコンのプレースホルダー表示。以前は参考サイト本人の実写真を仮置きしていたが、別人の顔写真を流用するのは不適切なため2026-09-24にアイコンプレースホルダーへ差し替え済み）
+- Git: 2026-09-24にローカルリポジトリを初期化し最初のコミットを作成。リモート（GitHub等）は未接続
