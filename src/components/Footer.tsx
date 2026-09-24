@@ -2,7 +2,6 @@ import CircleButton from './CircleButton'
 import { scrollToSection } from '../utils/scroll'
 
 const SITEMAP = ['Home', 'About', 'Skills', 'Works', 'Philosophy', 'Profile']
-const SOCIAL = ['GitHub', 'X', 'Email']
 
 function FooterLink({ label, sectionId }: { label: string; sectionId?: string }) {
   return (
@@ -30,19 +29,11 @@ function FooterLink({ label, sectionId }: { label: string; sectionId?: string })
 export default function Footer() {
   return (
     <footer className="layout-grid relative overflow-hidden bg-ink pb-12 pt-20 text-cream nav:pt-[6vw]">
-      <div className="col-span-6 flex flex-col gap-10 nav:col-span-7 nav:flex-row nav:gap-[3vw]">
-        <div className="flex flex-col gap-3">
-          <span className="text-p-x tracking-[0.2em] text-cream/50">Sitemap</span>
-          {SITEMAP.map((link) => (
-            <FooterLink key={link} label={link} sectionId={link.toLowerCase()} />
-          ))}
-        </div>
-        <div className="flex flex-col gap-3">
-          <span className="text-p-x tracking-[0.2em] text-cream/50">Follow</span>
-          {SOCIAL.map((link) => (
-            <FooterLink key={link} label={link} />
-          ))}
-        </div>
+      <div className="col-span-6 flex flex-col gap-3 nav:col-span-7">
+        <span className="text-p-x tracking-[0.2em] text-cream/50">Sitemap</span>
+        {SITEMAP.map((link) => (
+          <FooterLink key={link} label={link} sectionId={link.toLowerCase()} />
+        ))}
       </div>
 
       <div className="col-span-6 mt-10 flex flex-col gap-2 nav:col-span-8 nav:col-start-9 nav:mt-0">

@@ -3,7 +3,7 @@ import { useState } from 'react'
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xqpabozo'
 
 const fieldClass =
-  'w-full border-b border-cream/30 bg-transparent py-3 text-p-l text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-cream'
+  'ease-brand w-full rounded-[0.5vw] border border-cream/25 bg-cream/5 px-4 py-3 text-p-l text-cream placeholder:text-cream/40 outline-none transition-colors duration-300 focus:border-cream/70 focus:bg-cream/10'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle')

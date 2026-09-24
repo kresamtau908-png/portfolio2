@@ -69,8 +69,8 @@
    - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**（`Works.tsx`の`WORKS`配列、`image: '/images/works/project-01.jpg'`のように指定）。
 8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
 9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真枠（`GradientPanel.tsx`、Aboutと同じ抽象グラデーション）・人柄紹介文（**氏名「Your Name」・紹介文はプレースホルダー、要差し替え**）。
-10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「はじめの一歩を、一緒に。」＋ContactForm（Formspree連携済み: `xqpabozo`）。
-11. **Footer** (`Footer.tsx`): Sitemap（Home/About/Skills/Works/Philosophy/Profile）／Follow（GitHub/X/Email、リンク先未設定）／Contact（メールアドレスはプレースホルダー）／タグライン／Go to topボタン。
+10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「丁寧に、向き合います。」＋ContactForm（Formspree連携済み: `xqpabozo`）。（2026-09-24: 見出しは元々「はじめの一歩を、一緒に。」だったが、「静かに」を多用している点も踏まえ変更）
+11. **Footer** (`Footer.tsx`): Sitemap（Home/About/Skills/Works/Philosophy/Profile）／Contact（メールアドレスはプレースホルダー）／タグライン／Go to topボタン。（2026-09-24: Follow列（GitHub/X/Email）はユーザー指示により削除）
 12. **メニューオーバーレイ** (`MenuOverlay.tsx`): 右からダークパネルがスライドイン。背景コンテンツは縮小＋角丸＋左シフト。Navigation／Followの2カラム構成。
 
 ### 流用した動きの技術（giats.me再現時に実装したもの）
