@@ -1,4 +1,4 @@
-import PhotoPlaceholder from './PhotoPlaceholder'
+import OrbitPanel from './OrbitPanel'
 import RevealText from './RevealText'
 
 export default function Profile() {
@@ -6,7 +6,7 @@ export default function Profile() {
     <section id="profile" className="layout-grid bg-cream py-28 nav:py-[11vw]">
       <div className="col-span-6 nav:col-span-5">
         <div className="aspect-square overflow-hidden rounded-[0.6vw]">
-          <PhotoPlaceholder />
+          <OrbitPanel className="h-full w-full" />
         </div>
       </div>
 

@@ -1,22 +1,15 @@
 import { useState } from 'react'
 
-// TODO: Formspreeでフォーム作成後、実際のエンドポイントURLに差し替える
-// 例: https://formspree.io/f/xxxxxxxx
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xqpabozo'
 
 const fieldClass =
   'w-full border-b border-cream/30 bg-transparent py-3 text-p-l text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-cream'
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'not-configured' | 'submitting' | 'sent'>('idle')
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
-      setStatus('not-configured')
-      return
-    }
 
     const form = e.currentTarget
     setStatus('submitting')
@@ -26,10 +19,14 @@ export default function ContactForm() {
         body: new FormData(form),
         headers: { Accept: 'application/json' },
       })
-      setStatus(res.ok ? 'sent' : 'idle')
-      if (res.ok) form.reset()
+      if (res.ok) {
+        setStatus('sent')
+        form.reset()
+      } else {
+        setStatus('error')
+      }
     } catch {
-      setStatus('idle')
+      setStatus('error')
     }
   }
 
@@ -50,10 +47,8 @@ export default function ContactForm() {
         </span>
       </button>
 
-      {status === 'not-configured' && (
-        <p className="text-p-x text-cream/50">
-          ※ Formspreeのエンドポイント未設定のため、送信は準備中です。
-        </p>
+      {status === 'error' && (
+        <p className="text-p-x text-cream/50">送信に失敗しました。時間をおいて再度お試しください。</p>
       )}
       {status === 'sent' && <p className="text-p-x text-lime">送信しました。ありがとうございます。</p>}
     </form>

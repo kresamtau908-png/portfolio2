@@ -1,5 +1,5 @@
-import PhotoPlaceholder from './PhotoPlaceholder'
 import RevealText from './RevealText'
+import RipplePanel from './RipplePanel'
 
 export default function About() {
   return (
@@ -22,8 +22,8 @@ export default function About() {
       </div>
 
       <div className="order-1 col-span-6 mb-10 nav:order-2 nav:col-span-8 nav:col-start-9 nav:mb-0">
-        <div className="aspect-[662/763] overflow-hidden rounded-[0.6vw]">
-          <PhotoPlaceholder />
+        <div className="aspect-662/763 overflow-hidden rounded-[0.6vw]">
+          <RipplePanel className="h-full w-full" />
         </div>
       </div>
     </section>

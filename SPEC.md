@@ -37,7 +37,7 @@
 
 - **Formspree** を使用する。
 - Formspreeの直リンク（フォームのaction URLを直接embed）を使う方式。Vercelのサーバーレス関数等との連携は不要。
-- ステータス: **UI実装済み・エンドポイント未設定**。`src/components/ContactForm.tsx` の `FORMSPREE_ENDPOINT` がプレースホルダー。実際のエンドポイントURLを受け取り次第、1行差し替える。
+- ステータス: **実装済み**。エンドポイント `https://formspree.io/f/xqpabozo` を `src/components/ContactForm.tsx` の `FORMSPREE_ENDPOINT` に設定済み（2026-09-24）。
 - Contactセクション（`src/components/Contact.tsx`）に設置。他セクションより見せ方を強め（大見出し＋ダーク背景）にしている。
 
 ## レスポンシブ対応
@@ -61,15 +61,15 @@
 1. **Loader** (`Loader.tsx`): 「Quiet Strength」→「静かに、積み重ねる。」切り替え＋0-100%カウンター。
 2. **Header** (`Header.tsx`): 固定ヘッダー、ロード完了後にフェードイン。「Portfolio」ロゴ／Contactピルボタン／Menuボタン。
 3. **Hero** (`Hero.tsx`): ミニマルな構成。アイコピー「FRONT-END DEVELOPER」＋大見出し「Quiet Strength」＋「静かに、積み重ねる。」。下部に控えめなScrollインジケーター（線が伸びるアニメーション）。過去のギラつく3Dパネル演出は削除。
-4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右にポートレート写真枠（`PhotoPlaceholder.tsx`、アイコン表示のプレースホルダー、要差し替え）。
+4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右に抽象グラデーションパネル（`GradientPanel.tsx`、Navy→Muted Blueのグラデーション＋うっすらグリッド線。人物写真は使わない方針のため採用）。
 5. **ScrollQuote** (`ScrollQuote.tsx`): 「静かに学び、丁寧につくる。」を表示。高さ180vh（giats版の260vhから短縮）。テキストは画面中央にsticky固定。各単語は手前側（やや大きく・ぼやけた状態）から出現し、スクロールに連動して縮小・鮮明化しながら定位置へ収まる（初期状態は完全に不可視）。**Quiet Strengthのトーンに合わせて散らばり距離・ぼかし量・拡大率を大幅に控えめ**に調整済み（giats版の半分以下の強度）。
 6. **Skills** (`Skills.tsx`): 「02 SKILLS」。HTML/CSS/JavaScript/TypeScript/React/Tailwind CSS/Git・GitHub/Figmaを2カラムのナンバリングリストで表示。スクロールで軽いscale+blur+fadeイン（giats版の吊り下げバッジより大幅に控えめ）。
 7. **Works** (`Works.tsx`, 旧Projects): 「03 WORKS」。作品ごとに「吊り下げ式IDバッジ」（作品カラー・ストラップ・控えめなswayアニメーション、`WorkBadge.tsx`）＋近くに浮かぶ「クリーム色のメモカード」（タイトル・説明・タグ、装飾なしのフラットな見た目、`WorkNoteCard.tsx`）を左右交互に配置。giats.me再現時のClientsセクションの構成をWorks用に復活・再調整したもの（色はQuiet Strengthパレットに合わせたMuted Blue/Warm Taupe/Deep Navy系の3色、揺れの角度も控えめに縮小）。
    - バッジは社員証の「写真」部分に完成ページのスクリーンショットを貼り付けられる構造（`WorkBadge.tsx`の`image`prop、下部にカラーのネームプレート）。`image`未指定時はプレースホルダーアイコン表示。
    - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**（`Works.tsx`の`WORKS`配列、`image: '/images/works/project-01.jpg'`のように指定）。
 8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
-9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真・人柄紹介文（**氏名「Your Name」・写真（`PhotoPlaceholder.tsx`）・紹介文は全てプレースホルダー、要差し替え**）。
-10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「はじめの一歩を、一緒に。」＋ContactForm（Formspree連携、エンドポイント未設定）。
+9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真枠（`GradientPanel.tsx`、Aboutと同じ抽象グラデーション）・人柄紹介文（**氏名「Your Name」・紹介文はプレースホルダー、要差し替え**）。
+10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「はじめの一歩を、一緒に。」＋ContactForm（Formspree連携済み: `xqpabozo`）。
 11. **Footer** (`Footer.tsx`): Sitemap（Home/About/Skills/Works/Philosophy/Profile）／Follow（GitHub/X/Email、リンク先未設定）／Contact（メールアドレスはプレースホルダー）／タグライン／Go to topボタン。
 12. **メニューオーバーレイ** (`MenuOverlay.tsx`): 右からダークパネルがスライドイン。背景コンテンツは縮小＋角丸＋左シフト。Navigation／Followの2カラム構成。
 
@@ -87,10 +87,19 @@ Lenis慣性スクロール／RevealText（下から単語出現）／ScrollQuote
 
 ## 未確定・保留事項（要ユーザー入力）
 
-- Formspreeのフォームエンドポイント URL
 - Vercelデプロイのタイミング・ドメイン
 - Works（作品）の実際のコンテンツ・画像・下層ページ
-- Profileの氏名・写真・紹介文
+- Profileの氏名・紹介文
 - Footer/メニューのSNS・メールの実リンク先
-- About/Profileセクションのポートレート写真（現在はアイコンのプレースホルダー表示。以前は参考サイト本人の実写真を仮置きしていたが、別人の顔写真を流用するのは不適切なため2026-09-24にアイコンプレースホルダーへ差し替え済み）
 - Git: 2026-09-24にローカルリポジトリを初期化し最初のコミットを作成。リモート（GitHub等）は未接続
+
+### 写真枠の方針（2026-09-24決定・更新）
+
+ユーザーは自身の顔写真を掲載したくない意向。当初は両方とも同じ抽象グラデーションパネル（`GradientPanel.tsx`）にしたが、「味気ない」「2箇所は別デザインに」とのフィードバックを受け、**動きのある2種類の異なる装飾**に変更（`GradientPanel.tsx`は削除）。
+
+- **About**: `RipplePanel.tsx` — 中心の点から波紋（同心円）が静かに広がり続ける（`animate-ripple`、4.2s周期、3本を1.4sずつずらして表示）。「一歩ずつ踏み出す・じわじわ広がっていく」という抽象モチーフ。
+  - 2026-09-24: 当初は折れ線グラフ（`GrowthLinePanel.tsx`）だったが「折れ線グラフは嫌」とのフィードバックにより、グラフ的でない波紋モチーフに変更（`GrowthLinePanel.tsx`は削除）。
+- **Profile**: `OrbitPanel.tsx` — 柔らかくぼかした光の玉3つが5.5〜8.5秒周期で漂う（`animate-orbit-a/b/c`、CSS keyframes）。人柄を表す、より有機的で温かみのある意匠。
+  - 2026-09-24: 初期実装（16〜20秒周期）は動きが分かりづらいとのフィードバックを受け、周期を約1/3に短縮し移動距離も拡大（視認性向上）。
+
+動きの強度は「はっきり分かる程度に・ただし急かされる速さにはしない」を基準に調整し、Quiet Strengthのトーンを崩さないようにしている。他の装飾案（巨大ゴースト数字、ドット/グリッド柄）も検討したが不採用。
