@@ -61,14 +61,14 @@
 1. **Loader** (`Loader.tsx`): 「Quiet Strength」→「静かに、積み重ねる。」切り替え＋0-100%カウンター。
 2. **Header** (`Header.tsx`): 固定ヘッダー、ロード完了後にフェードイン。「Portfolio」ロゴ／Contactピルボタン／Menuボタン。
 3. **Hero** (`Hero.tsx`): ミニマルな構成。アイコピー「FRONT-END DEVELOPER」＋大見出し「Quiet Strength」＋「静かに、積み重ねる。」。下部に控えめなScrollインジケーター（線が伸びるアニメーション）。過去のギラつく3Dパネル演出は削除。
-4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右に抽象グラデーションパネル（`GradientPanel.tsx`、Navy→Muted Blueのグラデーション＋うっすらグリッド線。人物写真は使わない方針のため採用）。
-5. **ScrollQuote** (`ScrollQuote.tsx`): 「静かに学び、丁寧につくる。」を表示。高さ180vh（giats版の260vhから短縮）。テキストは画面中央にsticky固定。各単語は手前側（やや大きく・ぼやけた状態）から出現し、スクロールに連動して縮小・鮮明化しながら定位置へ収まる（初期状態は完全に不可視）。**Quiet Strengthのトーンに合わせて散らばり距離・ぼかし量・拡大率を大幅に控えめ**に調整済み（giats版の半分以下の強度）。
+4. **About** (`About.tsx`): 「01 ABOUT」。異業種からキャリアチェンジ／半年間フロントエンドエンジニア養成科で学習／卒業間近、というストーリー。右に波紋パネル（`RipplePanel.tsx`、人物写真は使わない方針のため採用。詳細は本ファイル下部「写真枠の方針」参照）。
+5. **ScrollQuote** (`ScrollQuote.tsx`): 「できることを、ひとつずつ増やしてきました。」を表示。高さ180vh（giats版の260vhから短縮）。テキストは画面中央にsticky固定。各単語は手前側（やや大きく・ぼやけた状態）から出現し、スクロールに連動して縮小・鮮明化しながら定位置へ収まる（初期状態は完全に不可視）。**Quiet Strengthのトーンに合わせて散らばり距離・ぼかし量・拡大率を大幅に控えめ**に調整済み（giats版の半分以下の強度）。
 6. **Skills** (`Skills.tsx`): 「02 SKILLS」。HTML/CSS/JavaScript/TypeScript/React/Tailwind CSS/Git・GitHub/Figmaを2カラムのナンバリングリストで表示。スクロールで軽いscale+blur+fadeイン（giats版の吊り下げバッジより大幅に控えめ）。
 7. **Works** (`Works.tsx`, 旧Projects): 「03 WORKS」。作品ごとに「吊り下げ式IDバッジ」（作品カラー・ストラップ・控えめなswayアニメーション、`WorkBadge.tsx`）＋近くに浮かぶ「クリーム色のメモカード」（タイトル・説明・タグ、装飾なしのフラットな見た目、`WorkNoteCard.tsx`）を左右交互に配置。giats.me再現時のClientsセクションの構成をWorks用に復活・再調整したもの（色はQuiet Strengthパレットに合わせたMuted Blue/Warm Taupe/Deep Navy系の3色、揺れの角度も控えめに縮小）。
    - バッジは社員証の「写真」部分に完成ページのスクリーンショットを貼り付けられる構造（`WorkBadge.tsx`の`image`prop、下部にカラーのネームプレート）。`image`未指定時はプレースホルダーアイコン表示。
    - プレースホルダー3件（Project 01-03）。**実際の制作物・スクリーンショットへの差し替えが必要**（`Works.tsx`の`WORKS`配列、`image: '/images/works/project-01.jpg'`のように指定）。
-8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
-9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真枠（`GradientPanel.tsx`、Aboutと同じ抽象グラデーション）・人柄紹介文（**氏名「Your Name」・紹介文はプレースホルダー、要差し替え**）。
+8. **Philosophy** (`Philosophy.tsx`): 「04 PHILOSOPHY」。見出し「大切にしていること。」＋THINK/考える→BUILD/つくる→IMPROVE/磨くの3ステップを3カラムで表示。Quiet Strengthを最も強く表現するセクション。
+9. **Profile** (`Profile.tsx`): 「05 PROFILE」。氏名・肩書き・写真枠（`OrbitPanel.tsx`）・人柄紹介文（**氏名「Your Name」・紹介文はプレースホルダー、要差し替え**）。
 10. **Contact** (`Contact.tsx`, 旧CTA): ダーク背景、大見出し「丁寧に、向き合います。」＋ContactForm（Formspree連携済み: `xqpabozo`）。（2026-09-24: 見出しは元々「はじめの一歩を、一緒に。」だったが、「静かに」を多用している点も踏まえ変更）
 11. **Footer** (`Footer.tsx`): Sitemap（Home/About/Skills/Works/Philosophy/Profile）／Contact（メールアドレスはプレースホルダー）／タグライン／Go to topボタン。（2026-09-24: Follow列（GitHub/X/Email）はユーザー指示により削除）
 12. **メニューオーバーレイ** (`MenuOverlay.tsx`): 右からダークパネルがスライドイン。背景コンテンツは縮小＋角丸＋左シフト。Navigation／Followの2カラム構成。
@@ -84,6 +84,16 @@ Lenis慣性スクロール／RevealText（下から単語出現）／ScrollQuote
 - Clientsセクションの「吊り下げ式IDバッジ」＋常時swayアニメーション — Skillsセクションへの転用は見送ったが、後日ユーザー指示によりWorksセクションへ復活・再調整して採用（`WorkBadge.tsx` / `WorkNoteCard.tsx`）
 - Footerの巨大ブランドワードマーク — 意味のないアクセントを避ける方針のため、タグライン程度の控えめな表現に変更
 - PillButton・見出しのuppercase強制 — 静かなトーンに合わせ通常表記に変更
+
+### 文章（コピー）の方針（2026-09-24決定）
+
+「企業に送る就職活動用ポートフォリオとして違和感のない文章」を基準に、サイト全体の文章を見直した。
+
+- 「静かに」という単語を多用しすぎていた（Hero／ScrollQuote／Philosophy／Profile／Footerで重複）ため、**Heroのタグライン「静かに、積み重ねる。」（Loaderでも同じ文言を使用）の1箇所のみに絞り**、他は言い換え（着実に／一歩ずつ／誠実に　など）に変更。
+- Contactの案内文はフリーランスの営業文的な「お気軽にご相談ください」調をやめ、「ご質問やお問い合わせは、下記フォームよりお気軽にご連絡ください。」という企業への問い合わせ導線として自然な言い回しに変更。
+- ContactFormの入力欄・送信ボタンを英語（Your name / Send message）から日本語（お名前 / 送信する）に変更。
+- About本文を簡潔化（同じ内容を2文で繰り返していた箇所を整理）。
+- Works（作品）のプレースホルダー説明文を「制作中。目的・工夫点などをここに記載予定。」（内部メモ的な文体）から「現在制作中です。完成次第、制作の目的や工夫した点を掲載します。」（閲覧者向けの文体）に変更。
 
 ## 未確定・保留事項（要ユーザー入力）
 

@@ -10,7 +10,7 @@ export default function Contact() {
           <RevealText text="丁寧に、" className="block" />
           <RevealText text="向き合います。" className="block" delay={0.1} />
         </h2>
-        <p className="text-p-l text-cream/60">お問い合わせ・ご相談はこちらからお気軽にどうぞ。</p>
+        <p className="text-p-l text-cream/60">ご質問やお問い合わせは、下記フォームよりお気軽にご連絡ください。</p>
         <div className="mt-4 flex w-full justify-center nav:mt-[1.5vw]">
           <ContactForm />
         </div>

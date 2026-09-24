@@ -14,10 +14,10 @@ export default function About() {
           <RevealText text="フロントエンドの世界へ。" className="block" delay={0.1} />
         </h2>
         <p className="text-p-l max-w-xl text-ink/70">
-          それまでとは異なる業種から、キャリアチェンジをしました。前職はWebとは関わりのない仕事です。
+          Webとは関わりのない仕事から、フロントエンドエンジニアを目指してキャリアチェンジしました。
         </p>
         <p className="text-p-l max-w-xl border-l-2 border-lime pl-5 text-ink/70">
-          退職後、半年間「フロントエンドエンジニア養成科」で学び直し、現在は卒業を間近に控えながら、このポートフォリオサイトを制作しています。
+          退職後は「フロントエンドエンジニア養成科」で半年間学び、現在は卒業を控えながら、実践としてこのポートフォリオサイトを制作しています。
         </p>
       </div>
 

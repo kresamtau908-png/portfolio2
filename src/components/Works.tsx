@@ -19,7 +19,7 @@ const WORKS: {
     title: 'Project 01',
     color: '#7c93ac',
     image: undefined,
-    description: '制作中。目的・工夫点などをここに記載予定。',
+    description: '現在制作中です。完成次第、制作の目的や工夫した点を掲載します。',
     tags: ['React', 'TypeScript'],
   },
   {
@@ -27,7 +27,7 @@ const WORKS: {
     title: 'Project 02',
     color: '#8a7a63',
     image: undefined,
-    description: '制作中。目的・工夫点などをここに記載予定。',
+    description: '現在制作中です。完成次第、制作の目的や工夫した点を掲載します。',
     tags: ['HTML', 'CSS', 'JavaScript'],
   },
   {
@@ -35,7 +35,7 @@ const WORKS: {
     title: 'Project 03',
     color: '#3d4f6b',
     image: undefined,
-    description: '制作中。目的・工夫点などをここに記載予定。',
+    description: '現在制作中です。完成次第、制作の目的や工夫した点を掲載します。',
     tags: ['React', 'Tailwind CSS'],
   },
 ]

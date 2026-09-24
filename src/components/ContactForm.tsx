@@ -32,9 +32,9 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-lg flex-col gap-6 text-left nav:gap-[1.6vw]">
-      <input type="text" name="name" placeholder="Your name" required className={fieldClass} />
-      <input type="email" name="email" placeholder="Your email" required className={fieldClass} />
-      <textarea name="message" placeholder="Your message" required rows={3} className={`${fieldClass} resize-none`} />
+      <input type="text" name="name" placeholder="お名前" required className={fieldClass} />
+      <input type="email" name="email" placeholder="メールアドレス" required className={fieldClass} />
+      <textarea name="message" placeholder="お問い合わせ内容" required rows={3} className={`${fieldClass} resize-none`} />
 
       <button
         type="submit"
@@ -42,8 +42,8 @@ export default function ContactForm() {
         className="ease-brand group relative inline-flex h-10 w-fit items-center justify-center overflow-hidden rounded-full bg-cream px-6 text-p-x font-medium text-ink shadow-[0_0.32vw_0.52vw_rgba(0,0,0,0.04)] transition-opacity duration-300 disabled:opacity-60 nav:h-[2.5vw] nav:px-[1.25vw]"
       >
         <span className="ease-brand absolute left-1/2 top-1/2 z-0 h-0 w-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime transition-[width,height] duration-600 group-hover:h-[16vw] group-hover:w-[16vw]" />
-        <span className="relative z-10 whitespace-nowrap uppercase tracking-wide">
-          {status === 'submitting' ? 'Sending...' : 'Send message'}
+        <span className="relative z-10 whitespace-nowrap tracking-wide">
+          {status === 'submitting' ? '送信中...' : '送信する'}
         </span>
       </button>
 

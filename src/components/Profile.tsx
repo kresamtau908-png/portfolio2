@@ -22,8 +22,8 @@ export default function Profile() {
         <p className="text-h5 font-normal text-ink/60">Front-end Developer</p>
         <p className="text-p-l max-w-xl text-ink/70">
           {/* TODO: 人柄が伝わる自己紹介文に差し替える */}
-          コツコツ積み上げることが得意です。分からないことは一つずつ丁寧に調べ、納得してから前に進むタイプ。
-          静かに、でも着実に前進することを大切にしています。
+          コツコツ積み上げることが得意です。分からないことは一つずつ丁寧に調べ、納得してから前に進むタイプです。
+          着実に前進することを大切にしています。
         </p>
       </div>
     </section>

@@ -18,7 +18,7 @@ const STEPS = [
     no: '03',
     en: 'IMPROVE',
     ja: '磨く',
-    text: '一度で終わらせず、見直し・改善を重ねて静かに精度を高めていく。',
+    text: '一度で終わらせず、見直しと改善を重ねて精度を高めていく。',
   },
 ]
 
@@ -53,7 +53,7 @@ export default function Philosophy() {
           <span className="text-p-x tracking-[0.2em] text-ink/50">PHILOSOPHY</span>
         </div>
         <h2 className="text-h2 mt-4 nav:mt-[1vw]">
-          <RevealText text="静かに、丁寧に。" />
+          <RevealText text="大切にしていること。" />
         </h2>
       </div>
 
