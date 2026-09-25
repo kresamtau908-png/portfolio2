@@ -43,8 +43,8 @@ function App() {
           <Hero />
           <About />
           <ScrollQuote
-            text="Still learning. Always building."
-            caption="学び続け、つくり続ける。"
+            text="I'm still learning something new every day, and still building on what came before — quietly, patiently, one step at a time."
+            caption="今日もまだ何かを学び、これまでの積み重ねの上に、また何かをつくっている。静かに、根気強く、一歩ずつ。"
           />
           <Skills />
           <Works />

@@ -28,7 +28,7 @@ function FooterLink({ label, sectionId }: { label: string; sectionId?: string })
 
 export default function Footer() {
   return (
-    <footer className="layout-grid relative overflow-hidden bg-ink pb-12 pt-20 text-cream nav:pt-[6vw]">
+    <footer className="layout-grid relative overflow-hidden border-t border-cream/10 bg-ink-deep pb-12 pt-20 text-cream nav:pt-[6vw]">
       <div className="col-span-6 flex flex-col gap-3 nav:col-span-7">
         <span className="text-p-x tracking-[0.2em] text-cream/50">Sitemap</span>
         {SITEMAP.map((link) => (
@@ -46,7 +46,7 @@ export default function Footer() {
         >
           your@email.com
         </a>
-        <p className="text-p-l mt-6 max-w-xs text-cream/50">一歩ずつ学び誠実に手を動かしています</p>
+        <p className="text-p-l mt-6 max-w-xs text-cream/50">Step by step, built with care.</p>
       </div>
 
       <div className="col-span-6 mt-16 flex items-end justify-between nav:col-span-16 nav:mt-[5vw]">

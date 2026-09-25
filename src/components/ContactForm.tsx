@@ -5,6 +5,8 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xqpabozo'
 const fieldClass =
   'ease-brand w-full rounded-[0.5vw] border border-cream/25 bg-cream/5 px-4 py-3 text-p-l text-cream placeholder:text-cream/40 outline-none transition-colors duration-300 focus:border-cream/70 focus:bg-cream/10'
 
+const labelClass = 'text-p-x tracking-wide text-cream/50'
+
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle')
 
@@ -32,9 +34,33 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-lg flex-col gap-6 text-left nav:gap-[1.6vw]">
-      <input type="text" name="name" placeholder="お名前" required className={fieldClass} />
-      <input type="email" name="email" placeholder="メールアドレス" required className={fieldClass} />
-      <textarea name="message" placeholder="お問い合わせ内容" required rows={3} className={`${fieldClass} resize-none`} />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="name" className={labelClass}>
+          お名前
+        </label>
+        <input id="name" type="text" name="name" placeholder="鈴木太郎" required className={fieldClass} />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="email" className={labelClass}>
+          メールアドレス
+        </label>
+        <input id="email" type="email" name="email" placeholder="taro@example.com" required className={fieldClass} />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="message" className={labelClass}>
+          お問い合わせ内容
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          placeholder="ポートフォリオを拝見してご連絡しました"
+          required
+          rows={3}
+          className={`${fieldClass} resize-none`}
+        />
+      </div>
 
       <button
         type="submit"

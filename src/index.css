@@ -4,6 +4,7 @@
   /* Quiet Strength palette: Deep Navy × Warm White × Muted Blue */
   --color-cream: #f7f4ee; /* warm white */
   --color-ink: #182338; /* deep navy */
+  --color-ink-deep: #0e1526; /* footer用の一段暗いネイビー。Contactとの境目を分ける */
   --color-accent: #fbfaf6; /* near-white, for pills on light bg */
   --color-lime: #7c93ac; /* muted blue accent */
   --font-display: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
@@ -153,27 +154,16 @@ body {
   animation: pulse-soft 3.4s ease-in-out infinite;
 }
 
-/* Hero背景の図形：マウス追従の代わりに、それぞれ違う周期でゆっくり自動的に漂う */
-@keyframes hero-drift-a {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, 24px); }
+/* PuzzleTiles: 1枚のビジュアルを割ったタイルが、それぞれ違う周期で静かに上下する */
+@keyframes tile-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(var(--tile-amp, 10px)); }
 }
-@keyframes hero-drift-b {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-45px, -30px); }
+.animate-tile-float {
+  animation-name: tile-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
-@keyframes hero-drift-c {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-35px, 26px); }
-}
-@keyframes hero-drift-d {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(70px, -50px); }
-}
-.animate-hero-drift-a { animation: hero-drift-a 14s ease-in-out infinite; }
-.animate-hero-drift-b { animation: hero-drift-b 18s ease-in-out infinite; }
-.animate-hero-drift-c { animation: hero-drift-c 11s ease-in-out infinite; }
-.animate-hero-drift-d { animation: hero-drift-d 20s ease-in-out infinite; }
 
 ::selection {
   background: var(--color-lime);

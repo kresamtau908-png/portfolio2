@@ -8,7 +8,7 @@ const SKILLS = [
   { name: 'TypeScript', note: '型による安全な実装' },
   { name: 'React', note: 'コンポーネント設計' },
   { name: 'Tailwind CSS', note: 'ユーティリティファーストなスタイリング' },
-  { name: 'Git / GitHub', note: 'バージョン管理・チーム開発' },
+  { name: 'GitHub', note: 'バージョン管理・チーム開発' },
   { name: 'Figma', note: 'デザインの読み解きと実装' },
 ]
 
@@ -18,7 +18,7 @@ function SkillItem({ name, note, index }: { name: string; note: string; index: n
   return (
     <div
       ref={ref}
-      className="ease-brand flex items-start gap-6 border-b border-ink/10 py-8 transition-[opacity,transform,filter] duration-700 nav:gap-[1.5vw] nav:py-[2.2vw]"
+      className="ease-brand odd:bg-ink/5 flex items-start gap-6 border-b border-ink/10 px-4 py-8 transition-[opacity,transform,filter] duration-700 nav:gap-[1.5vw] nav:px-[1vw] nav:py-[2.2vw] nav:nth-[4n+1]:bg-ink/5 nav:nth-[4n+2]:bg-transparent nav:nth-[4n+3]:bg-transparent nav:nth-[4n+4]:bg-ink/5"
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? 'scale(1) translateY(0)' : 'scale(1.08) translateY(12px)',

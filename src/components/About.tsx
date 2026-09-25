@@ -4,7 +4,7 @@ import RevealText from './RevealText'
 export default function About() {
   return (
     <section id="about" className="layout-grid bg-cream py-28 nav:py-[11vw]">
-      <div className="order-2 col-span-6 flex flex-col gap-8 nav:order-1 nav:col-span-7 nav:gap-[2.2vw]">
+      <div className="order-2 col-span-6 flex flex-col gap-8 nav:order-2 nav:col-span-7 nav:col-start-10 nav:gap-[2.2vw]">
         <div className="flex items-center gap-4">
           <span className="text-p-x text-ink/40">01</span>
           <span className="text-p-x tracking-[0.2em] text-ink/50">ABOUT</span>
@@ -21,7 +21,7 @@ export default function About() {
         </p>
       </div>
 
-      <div className="order-1 col-span-6 mb-10 nav:order-2 nav:col-span-8 nav:col-start-9 nav:mb-0">
+      <div className="order-1 col-span-6 mb-10 nav:order-1 nav:col-span-8 nav:col-start-1 nav:mb-0">
         <div className="aspect-662/763 overflow-hidden rounded-[0.6vw]">
           <GeometricPanel className="h-full w-full" />
         </div>

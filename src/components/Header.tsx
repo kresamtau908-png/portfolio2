@@ -15,7 +15,7 @@ export default function Header({ menuOpen, onToggleMenu }: HeaderProps) {
           e.preventDefault()
           scrollToSection('home')
         }}
-        className="text-h6 col-span-3 font-semibold nav:col-span-3"
+        className="text-h6 col-span-3 w-fit rounded-full bg-accent/90 px-4 py-1.5 font-semibold text-ink shadow-[0_0.32vw_0.52vw_rgba(0,0,0,0.04)] backdrop-blur-sm nav:col-span-3 nav:px-[1vw] nav:py-[0.4vw]"
       >
         Portfolio
       </a>

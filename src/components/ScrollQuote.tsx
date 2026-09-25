@@ -57,32 +57,63 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   // overlapping bands so neighbouring characters converge in a smooth wave
   const band = Math.min(0.16, 1.8 / words.length)
 
+  // 英単語の途中で改行されないよう、スペース区切りの単語ごとにグループ化する。
+  // 文字単位のアニメーションはそのままに、単語内は nowrap のコンテナで包んで改行points を単語間だけに限定する
+  const wordGroups = useMemo(() => {
+    const groups: number[][] = []
+    let current: number[] = []
+    words.forEach((char, i) => {
+      if (char === ' ') {
+        if (current.length) {
+          groups.push(current)
+          current = []
+        }
+        groups.push([i])
+      } else {
+        current.push(i)
+      }
+    })
+    if (current.length) groups.push(current)
+    return groups
+  }, [words])
+
+  const renderChar = (i: number) => {
+    const char = words[i]
+    const start = (i / words.length) * (1 - band)
+    const local = Math.min(1, Math.max(0, (progress - start) / band))
+    const eased = 1 - Math.pow(1 - local, 3)
+    const offset = offsets[i]
+    const inv = 1 - eased
+    const scale = 1 + inv * (offset.scale - 1)
+
+    return (
+      <span
+        key={i}
+        className="inline-block will-change-transform"
+        style={{
+          opacity: eased,
+          filter: `blur(${inv * 6}px)`,
+          transform: `translate(${inv * offset.x}px, ${inv * offset.y}px) scale(${scale}) rotate(${inv * offset.rotate}deg)`,
+        }}
+      >
+        {char === ' ' ? ' ' : char}
+      </span>
+    )
+  }
+
   return (
     <section ref={wrapperRef} className="relative h-[180vh] bg-cream">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-5 overflow-hidden px-8 nav:px-[6vw]">
         <p className="text-h3 max-w-3xl text-center font-semibold">
-          {words.map((char, i) => {
-            const start = (i / words.length) * (1 - band)
-            const local = Math.min(1, Math.max(0, (progress - start) / band))
-            const eased = 1 - Math.pow(1 - local, 3)
-            const offset = offsets[i]
-            const inv = 1 - eased
-            const scale = 1 + inv * (offset.scale - 1)
-
-            return (
-              <span
-                key={i}
-                className="inline-block will-change-transform"
-                style={{
-                  opacity: eased,
-                  filter: `blur(${inv * 6}px)`,
-                  transform: `translate(${inv * offset.x}px, ${inv * offset.y}px) scale(${scale}) rotate(${inv * offset.rotate}deg)`,
-                }}
-              >
-                {char === ' ' ? ' ' : char}
+          {wordGroups.map((indices, gi) =>
+            indices.length > 1 ? (
+              <span key={gi} className="inline-block whitespace-nowrap">
+                {indices.map((i) => renderChar(i))}
               </span>
-            )
-          })}
+            ) : (
+              renderChar(indices[0])
+            ),
+          )}
         </p>
 
         {caption && (
