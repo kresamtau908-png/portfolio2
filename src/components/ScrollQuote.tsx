@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface ScrollQuoteProps {
   text: string
+  caption?: string
 }
 
 // Deterministic pseudo-random offset per character, so the layout always
@@ -11,7 +12,7 @@ function seededRandom(seed: number) {
   return x - Math.floor(x)
 }
 
-export default function ScrollQuote({ text }: ScrollQuoteProps) {
+export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   // 日本語はスペースで区切られていないため、文字単位で分割する
   const words = Array.from(text)
@@ -58,7 +59,7 @@ export default function ScrollQuote({ text }: ScrollQuoteProps) {
 
   return (
     <section ref={wrapperRef} className="relative h-[180vh] bg-cream">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden px-8 nav:px-[6vw]">
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-5 overflow-hidden px-8 nav:px-[6vw]">
         <p className="text-h3 max-w-3xl text-center font-semibold">
           {words.map((char, i) => {
             const start = (i / words.length) * (1 - band)
@@ -83,6 +84,15 @@ export default function ScrollQuote({ text }: ScrollQuoteProps) {
             )
           })}
         </p>
+
+        {caption && (
+          <p
+            className="text-p-l max-w-xl text-center text-ink/50"
+            style={{ opacity: Math.min(1, progress * 1.2) }}
+          >
+            {caption}
+          </p>
+        )}
       </div>
     </section>
   )

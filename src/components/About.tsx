@@ -10,8 +10,8 @@ export default function About() {
           <span className="text-p-x tracking-[0.2em] text-ink/50">ABOUT</span>
         </div>
         <h2 className="text-h2">
-          <RevealText text="異業種から" className="block" />
-          <RevealText text="フロントエンドの世界へ" className="block" delay={0.1} />
+          <RevealText text="From Another Field," className="block" />
+          <RevealText text="Into Front-End." className="block" delay={0.1} />
         </h2>
         <p className="text-p-l max-w-xl text-ink/70">
           Webとは関わりのない仕事からフロントエンドエンジニアを目指してキャリアチェンジしました

@@ -46,7 +46,7 @@ export default function Loader({ onDone }: LoaderProps) {
               showShort ? '-translate-y-full' : 'translate-y-0'
             }`}
           >
-            {showShort ? '静かに積み重ねる' : 'Quiet Strength'}
+            {showShort ? 'Building, Quietly.' : 'Quiet Strength'}
           </h2>
         </div>
         <div className="absolute bottom-8 right-8 text-h2 tabular-nums">{progress}%</div>

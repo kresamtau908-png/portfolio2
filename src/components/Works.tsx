@@ -29,7 +29,7 @@ export default function Works() {
             <span className="text-p-x tracking-[0.2em] text-cream/50">WORKS</span>
           </div>
           <h2 className="text-h2 mt-4 nav:mt-[1vw]">
-            <RevealText text="つくったもの" />
+            <RevealText text="Selected Works" />
           </h2>
         </div>
       </div>

@@ -42,7 +42,10 @@ function App() {
         <main className={`relative transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}>
           <Hero />
           <About />
-          <ScrollQuote text="できることをひとつずつ増やしてきました" />
+          <ScrollQuote
+            text="Still learning. Always building."
+            caption="学び続け、つくり続ける。"
+          />
           <Skills />
           <Works />
           <Philosophy />

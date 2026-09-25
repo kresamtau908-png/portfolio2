@@ -79,7 +79,7 @@ export default function Philosophy() {
           <span className="text-p-x tracking-[0.2em] text-ink/50">PHILOSOPHY</span>
         </div>
         <h2 className="text-h2 mt-4 nav:mt-[1vw]">
-          <RevealText text="大切にしていること" />
+          <RevealText text="What I Value" />
         </h2>
       </div>
 
