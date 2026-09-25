@@ -53,6 +53,11 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
     return () => cancelAnimationFrame(raf)
   }, [])
 
+  // 英語本文はスクロール全体の前半だけで組み上げ終え、日本語キャプションは
+  // それが完了してから残りの範囲で現れるようにする
+  const ENGLISH_END = 0.7
+  const textProgress = Math.min(1, progress / ENGLISH_END)
+
   // each character gets its own slice of the overall scroll progress, with
   // overlapping bands so neighbouring characters converge in a smooth wave
   const band = Math.min(0.16, 1.8 / words.length)
@@ -80,7 +85,7 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   const renderChar = (i: number) => {
     const char = words[i]
     const start = (i / words.length) * (1 - band)
-    const local = Math.min(1, Math.max(0, (progress - start) / band))
+    const local = Math.min(1, Math.max(0, (textProgress - start) / band))
     const eased = 1 - Math.pow(1 - local, 3)
     const offset = offsets[i]
     const inv = 1 - eased
@@ -102,7 +107,7 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   }
 
   return (
-    <section ref={wrapperRef} className="relative h-[180vh] bg-cream">
+    <section ref={wrapperRef} className="relative h-[280vh] bg-cream">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-5 overflow-hidden px-8 nav:px-[6vw]">
         <p className="text-h3 max-w-3xl text-center font-semibold">
           {wordGroups.map((indices, gi) =>
@@ -116,14 +121,25 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
           )}
         </p>
 
-        {caption && (
-          <p
-            className="text-p-l max-w-xl text-center text-ink/50"
-            style={{ opacity: Math.min(1, progress * 1.2) }}
-          >
-            {caption}
-          </p>
-        )}
+        {caption &&
+          (() => {
+            // 英語本文が最後まで表示され終わってから、位置は動かさずぼかしだけが
+            // 解けるようにゆっくり現れる
+            const local = Math.min(1, Math.max(0, (progress - ENGLISH_END) / (1 - ENGLISH_END)))
+            const eased = local * local * (3 - 2 * local)
+            const remaining = 1 - eased
+            return (
+              <p
+                className="text-p-l max-w-xl text-center text-ink/50"
+                style={{
+                  opacity: eased,
+                  filter: `blur(${remaining * 5}px)`,
+                }}
+              >
+                {caption}
+              </p>
+            )
+          })()}
       </div>
     </section>
   )

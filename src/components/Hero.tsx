@@ -3,9 +3,9 @@ import RevealText from './RevealText'
 
 export default function Hero() {
   return (
-    <section id="home" className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-cream pt-36 pb-20 nav:pt-[12vw]">
+    <section id="home" className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-cream pt-28 pb-20 nav:pt-[7vw]">
       <div className="layout-grid items-center">
-        <div className="col-span-6 nav:col-span-8 nav:col-start-1">
+        <div className="col-span-6 -mt-6 nav:col-span-8 nav:col-start-1 nav:mt-[-2.5vw]">
           <p className="text-p-x mb-6 tracking-[0.2em] text-lime nav:mb-[1.4vw]">FRONT-END DEVELOPER</p>
           <h1 className="text-h1">
             <RevealText text="Quiet Strength" className="block" />
