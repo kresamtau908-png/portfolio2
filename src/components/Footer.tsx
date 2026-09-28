@@ -49,7 +49,14 @@ export default function Footer() {
         <p className="text-p-l mt-6 max-w-xs text-cream/50">Step by step, built with care.</p>
       </div>
 
-      <div className="col-span-6 mt-16 flex items-end justify-between nav:col-span-16 nav:mt-[5vw]">
+      <p
+        aria-hidden="true"
+        className="col-span-6 mt-16 select-none whitespace-nowrap text-[11vw] font-semibold leading-[0.9] tracking-[-0.04em] text-cream/15 nav:col-span-16 nav:mt-[3vw] nav:text-center nav:text-[7.4vw]"
+      >
+        Quiet Strength
+      </p>
+
+      <div className="col-span-6 mt-10 flex items-end justify-between nav:col-span-16 nav:mt-[3vw]">
         <p className="text-p-xs text-cream/40">&copy; 2026 Portfolio. All Rights Reserved.</p>
         <CircleButton
           onClick={() =>
