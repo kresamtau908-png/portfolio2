@@ -1,50 +1,60 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
 interface ScrollQuoteProps {
   text: string
   caption?: string
 }
 
-// Deterministic pseudo-random offset per character, so the layout always
+// Deterministic pseudo-random offset per word, so the layout always
 // starts from the same scatter instead of re-randomizing on render.
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 999) * 10000
   return x - Math.floor(x)
 }
 
+// 参考: giats.me の引用セクション。単語ごとにランダムな順番で、画面の手前（奥行き方向）から
+// 横軸でパタンと倒れた状態で現れ、奥へ下がりながら起き上がって定位置に着地する
+const WORD_DURATION = 0.5 // 1単語が着地するまでにかける、英語本文の進捗(0〜1)に対する割合
+const PERSPECTIVE = 1000 // px: 奥行きの基準。単語の開始位置(Z)はこれより手前に置く
+const SMOOTHING_TIME = 0.4 // 秒: スクロールに対する追従の遅れ。大きいほどゆっくり揃う（約3倍の時間でほぼ追いつく）
+
 export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  // 日本語はスペースで区切られていないため、文字単位で分割する
-  const words = Array.from(text)
+  const words = useMemo(() => text.split(' '), [text])
   const [progress, setProgress] = useState(0)
 
-  // each character drifts in from close to the viewer (large + blurry),
-  // shrinking and sharpening into place as it settles
+  // 各単語の開始タイミング（ランダムな順番）と、開始時の位置・奥行き・倒れ具合
   const offsets = useMemo(
     () =>
-      words.map((_, i) => {
-        const angle = seededRandom(i) * Math.PI * 2
-        const drift = 10 + seededRandom(i + 40) * 30
-        return {
-          x: Math.cos(angle) * drift,
-          y: Math.sin(angle) * drift,
-          scale: 1.35 + seededRandom(i + 60) * 0.45,
-          rotate: (seededRandom(i + 120) - 0.5) * 6,
-        }
-      }),
+      words.map((_, i) => ({
+        start: seededRandom(i + 7) * (1 - WORD_DURATION),
+        x: (seededRandom(i) - 0.5) * 190, // %: 単語自身の幅に対する横ずれ（最大で約1単語分）
+        y: (seededRandom(i + 40) - 0.5) * 18, // %: 単語自身の高さに対する縦ずれ
+        z: 500 + seededRandom(i + 60) * 420, // px: 手前にどれだけ飛び出しているか
+        rotateX: (seededRandom(i + 120) - 0.5) * 176, // deg: 横軸まわりの倒れ具合（最大±88°）
+      })),
     [words],
   )
 
+  // スクロール位置から求めた進捗(target)に、表示上の進捗を少し遅れて追いつかせる。
+  // 速くスクロールしても一瞬で揃わず、SMOOTHING_TIME秒ほどかけてなめらかに組み上がる
   useEffect(() => {
     let raf = 0
+    let current = 0
+    let lastTime = performance.now()
 
-    const update = () => {
+    const update = (now: number) => {
+      // rAFのタイムスタンプは開始時のperformance.now()より前になることがあるため、負の値にならないようにする
+      const dt = Math.min(0.1, Math.max(0, (now - lastTime) / 1000))
+      lastTime = now
       const el = wrapperRef.current
       if (el) {
         const rect = el.getBoundingClientRect()
         const scrollable = rect.height - window.innerHeight
-        const p = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0
-        setProgress(p)
+        const target = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0
+        current += (target - current) * (1 - Math.exp(-dt / SMOOTHING_TIME))
+        if (Math.abs(target - current) < 0.0005) current = target
+        setProgress(current)
       }
       raf = requestAnimationFrame(update)
     }
@@ -58,50 +68,25 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   const ENGLISH_END = 0.7
   const textProgress = Math.min(1, progress / ENGLISH_END)
 
-  // each character gets its own slice of the overall scroll progress, with
-  // overlapping bands so neighbouring characters converge in a smooth wave
-  const band = Math.min(0.16, 1.8 / words.length)
-
-  // 英単語の途中で改行されないよう、スペース区切りの単語ごとにグループ化する。
-  // 文字単位のアニメーションはそのままに、単語内は nowrap のコンテナで包んで改行points を単語間だけに限定する
-  const wordGroups = useMemo(() => {
-    const groups: number[][] = []
-    let current: number[] = []
-    words.forEach((char, i) => {
-      if (char === ' ') {
-        if (current.length) {
-          groups.push(current)
-          current = []
-        }
-        groups.push([i])
-      } else {
-        current.push(i)
-      }
-    })
-    if (current.length) groups.push(current)
-    return groups
-  }, [words])
-
-  const renderChar = (i: number) => {
-    const char = words[i]
-    const start = (i / words.length) * (1 - band)
-    const local = Math.min(1, Math.max(0, (textProgress - start) / band))
-    const eased = 1 - Math.pow(1 - local, 3)
+  const renderWord = (word: string, i: number) => {
     const offset = offsets[i]
+    const local = Math.min(1, Math.max(0, (textProgress - offset.start) / WORD_DURATION))
+    // 序盤で大きく動き、着地直前はゆっくり落ち着く
+    const eased = 1 - Math.pow(1 - local, 4)
     const inv = 1 - eased
-    const scale = 1 + inv * (offset.scale - 1)
 
     return (
       <span
-        key={i}
         className="inline-block will-change-transform"
         style={{
           opacity: eased,
-          filter: `blur(${inv * 6}px)`,
-          transform: `translate(${inv * offset.x}px, ${inv * offset.y}px) scale(${scale}) rotate(${inv * offset.rotate}deg)`,
+          transform:
+            inv > 0
+              ? `translate(${inv * offset.x}%, ${inv * offset.y}%) translate3d(0, 0, ${inv * offset.z}px) rotateX(${inv * offset.rotateX}deg)`
+              : 'none',
         }}
       >
-        {char === ' ' ? ' ' : char}
+        {word}
       </span>
     )
   }
@@ -109,16 +94,13 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   return (
     <section ref={wrapperRef} className="relative h-[280vh] bg-cream">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-5 overflow-hidden px-8 nav:px-[6vw]">
-        <p className="text-h3 max-w-3xl text-center font-semibold">
-          {wordGroups.map((indices, gi) =>
-            indices.length > 1 ? (
-              <span key={gi} className="inline-block whitespace-nowrap">
-                {indices.map((i) => renderChar(i))}
-              </span>
-            ) : (
-              renderChar(indices[0])
-            ),
-          )}
+        <p className="text-h3 max-w-3xl text-center font-semibold" style={{ perspective: `${PERSPECTIVE}px` }}>
+          {words.map((word, i) => (
+            <Fragment key={i}>
+              {i > 0 && ' '}
+              {renderWord(word, i)}
+            </Fragment>
+          ))}
         </p>
 
         {caption &&
