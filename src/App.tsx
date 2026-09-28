@@ -2,6 +2,7 @@ import { useState } from 'react'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import GooeyCursor from './components/GooeyCursor'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Loader from './components/Loader'
@@ -30,6 +31,8 @@ function App() {
       {loading && <Loader onDone={() => setLoading(false)} />}
 
       <div className="noise-overlay" />
+
+      <GooeyCursor active={!loading} />
 
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
 

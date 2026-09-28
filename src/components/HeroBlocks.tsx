@@ -21,7 +21,7 @@ function smoothstep(x: number) {
 
 // Loader（読み込み演出）が隠れ終わる頃に組み上がりを開始するための待ち時間、
 // および組み上がりにかける時間
-const ENTRANCE_DELAY = 3.4 // 秒: Loaderの表示時間に合わせた開始待ち
+const ENTRANCE_DELAY = 4.4 // 秒: Loaderが終わる3.4秒から、さらに1秒ずらして本体のフェードインと重ならないようにする
 const ENTRANCE_DURATION = 2.5 // 秒: 組み上がりにかける時間
 
 // 完成後の待機演出:「ランダムな1箇所のブロックが消え、隣にある既存のブロックが
@@ -44,6 +44,7 @@ const EVENT_DURATION = T_GAP_END + PHASE_ARRIVE // 秒: 1回のイベント全�
 
 const EVENT_SILENCE_MIN = 2 // 秒: 1つのイベントが終わってから、次のブロックが消え始めるまでの最短の間
 const EVENT_SILENCE_RANGE = 4 // 秒: その間のランダムな振れ幅
+const IDLE_START_DELAY = 0.8 // 秒: 組み上がりが完成してから、最初のイベントが始まるまでの間
 
 export default function HeroBlocks({ rows = 4, cols = 5, className = '' }: HeroBlocksProps) {
   const total = rows * cols
@@ -165,9 +166,9 @@ export default function HeroBlocks({ rows = 4, cols = 5, className = '' }: HeroB
   const progress = Math.min(1, Math.max(0, (elapsed - ENTRANCE_DELAY) / ENTRANCE_DURATION))
   const isComplete = progress >= 1
 
-  const idleClock = Math.max(0, elapsed - ENTRANCE_DELAY - ENTRANCE_DURATION)
-  const t = loopDuration > 0 ? idleClock % loopDuration : 0
-  const activeEvent = isComplete ? events.find((e) => t >= e.time && t < e.time + EVENT_DURATION) : undefined
+  const idleClock = elapsed - ENTRANCE_DELAY - ENTRANCE_DURATION - IDLE_START_DELAY
+  const t = loopDuration > 0 && idleClock > 0 ? idleClock % loopDuration : 0
+  const activeEvent = isComplete && idleClock > 0 ? events.find((e) => t >= e.time && t < e.time + EVENT_DURATION) : undefined
   // イベント開始からの経過秒数（0〜EVENT_DURATION）として扱う
   let eventTime = 0
   if (activeEvent) {
