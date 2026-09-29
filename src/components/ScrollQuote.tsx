@@ -64,8 +64,10 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   }, [])
 
   // 英語本文はスクロール全体の前半だけで組み上げ終え、日本語キャプションは
-  // それが完了してから残りの範囲で現れるようにする
-  const ENGLISH_END = 0.7
+  // それが完了してから現れる。CAPTION_END以降は、すべて表示された状態のまま
+  // 画面に留まる区間にして、表示しきる前にセクションが流れていかないようにする
+  const ENGLISH_END = 0.55
+  const CAPTION_END = 0.8
   const textProgress = Math.min(1, progress / ENGLISH_END)
 
   const renderWord = (word: string, i: number) => {
@@ -92,7 +94,7 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
   }
 
   return (
-    <section ref={wrapperRef} className="relative h-[280vh] bg-cream">
+    <section ref={wrapperRef} className="relative h-[320vh] bg-cream">
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-5 overflow-hidden px-8 nav:px-[6vw]">
         <p className="text-h3 max-w-3xl text-center font-semibold" style={{ perspective: `${PERSPECTIVE}px` }}>
           {words.map((word, i) => (
@@ -107,12 +109,15 @@ export default function ScrollQuote({ text, caption }: ScrollQuoteProps) {
           (() => {
             // 英語本文が最後まで表示され終わってから、位置は動かさずぼかしだけが
             // 解けるようにゆっくり現れる
-            const local = Math.min(1, Math.max(0, (progress - ENGLISH_END) / (1 - ENGLISH_END)))
+            const local = Math.min(1, Math.max(0, (progress - ENGLISH_END) / (CAPTION_END - ENGLISH_END)))
             const eased = local * local * (3 - 2 * local)
             const remaining = 1 - eased
             return (
+              // captionに含めた改行(\n)の位置で改行する（「静かに」が行の途中で分かれないように）。
+              // 画面が狭くて折り返す場合も、文節の区切りで改行し、各行の長さをそろえて
+              // 「る。」のような短い行が1つだけ残らないようにする
               <p
-                className="text-p-l max-w-xl text-center text-ink/50"
+                className="text-p-l max-w-2xl whitespace-pre-line text-center text-balance text-ink/50 [word-break:auto-phrase]"
                 style={{
                   opacity: eased,
                   filter: `blur(${remaining * 5}px)`,

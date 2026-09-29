@@ -38,13 +38,11 @@ export default function Footer() {
 
       <div className="col-span-6 mt-10 flex flex-col gap-2 nav:col-span-8 nav:col-start-9 nav:mt-0">
         <span className="text-p-x tracking-[0.2em] text-cream/50">Contact</span>
-        {/* TODO: 実際の連絡先メールアドレスに差し替える */}
         <a
-          href="#"
-          onClick={(e) => e.preventDefault()}
+          href="mailto:kresam.tau908@gmail.com"
           className="text-h4 w-fit border-b border-cream/30 transition-colors hover:border-cream"
         >
-          your@email.com
+          kresam.tau908@gmail.com
         </a>
         <p className="text-p-l mt-6 max-w-xs text-cream/50">Step by step, built with care.</p>
       </div>
