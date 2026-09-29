@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface HeroBlocksProps {
   rows?: number
@@ -149,17 +149,30 @@ export default function HeroBlocks({ rows = 4, cols = 5, className = '' }: HeroB
     return { events: list, loopDuration: t }
   }, [total, rows, cols])
 
-  // 表示されてからの経過時間を、1つのタイマーで一貫して計測する
+  // 表示されてからの経過時間を、1つのタイマーで一貫して計測する。
+  // 画面外にある間は再描画を止める（毎フレームの再描画がスクロール中のカクつきの原因になるため）。
+  // 時計そのものは進み続けるので、画面内に戻ったときは本来の時刻の状態から再開する
+  const rootRef = useRef<HTMLDivElement>(null)
   const [elapsed, setElapsed] = useState(0)
   useEffect(() => {
     let raf = 0
+    let visible = true
     const startedAt = performance.now()
     const tick = (now: number) => {
-      setElapsed((now - startedAt) / 1000)
+      if (visible) setElapsed((now - startedAt) / 1000)
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+    })
+    if (rootRef.current) observer.observe(rootRef.current)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      observer.disconnect()
+    }
   }, [])
 
   // 組み上がりの進捗(0〜1)。Loaderの表示時間だけ待ってから、ENTRANCE_DURATION秒かけて進む
@@ -183,6 +196,7 @@ export default function HeroBlocks({ rows = 4, cols = 5, className = '' }: HeroB
 
   return (
     <div
+      ref={rootRef}
       className={`grid ${className}`}
       style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, gridTemplateRows: `repeat(${rows}, 1fr)` }}
     >
