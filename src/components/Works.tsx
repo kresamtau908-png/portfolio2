@@ -1,17 +1,31 @@
 import RevealText from './RevealText'
 import WorkSlideCard from './WorkSlideCard'
 
-// TODO: 実際の制作物に差し替える。image に完成ページのスクリーンショットのパスを
-// 指定するとカードの画像部分に反映される（例: /images/works/project-01.jpg）。
-// 未指定の間は「Coming soon」のプレースホルダーを表示する。
+// image に完成ページのスクリーンショットのパスを指定するとカードの画像部分に反映される
+// （public/images/works/ に置く）。未指定の間は「Coming soon」のプレースホルダーを表示する。
+// url（公開サイト）・repo（ソースコード）を指定すると、カードからそれぞれ別タブで開ける。
+// notes には制作の経緯や期間などを短い箇条書きで入れる（タグの下に表示）。
+// TODO: Project 02・03 を実際の制作物に差し替える
 const WORKS: {
   no: string
   title: string
   color: string
   image?: string
   tags: string[]
+  url?: string
+  repo?: string
+  notes?: string[]
 }[] = [
-  { no: '01', title: 'Project 01', color: '#7c93ac', image: undefined, tags: ['React', 'TypeScript'] },
+  {
+    no: '01',
+    title: 'ポケモン検索アプリ',
+    color: '#7c93ac',
+    image: '/images/works/pokemon-search.webp',
+    tags: ['TypeScript', 'Tailwind CSS', 'PokeAPI'],
+    url: 'https://pokemon-search-app-lake.vercel.app/',
+    repo: 'https://github.com/kresamtau908-png/pokemon-search',
+    notes: ['TypeScriptと外部APIの扱いを学ぶため、自主制作', '制作期間：約2週間'],
+  },
   { no: '02', title: 'Project 02', color: '#8a7a63', image: undefined, tags: ['HTML', 'CSS', 'JavaScript'] },
   { no: '03', title: 'Project 03', color: '#3d4f6b', image: undefined, tags: ['React', 'Tailwind CSS'] },
 ]
@@ -44,6 +58,9 @@ export default function Works() {
               color={work.color}
               image={work.image}
               tags={work.tags}
+              url={work.url}
+              repo={work.repo}
+              notes={work.notes}
             />
           ))}
         </div>
