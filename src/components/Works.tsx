@@ -5,7 +5,7 @@ import WorkSlideCard from './WorkSlideCard'
 // （public/images/works/ に置く）。未指定の間は「Coming soon」のプレースホルダーを表示する。
 // url（公開サイト）・repo（ソースコード）を指定すると、カードからそれぞれ別タブで開ける。
 // notes には制作の経緯や期間などを短い箇条書きで入れる（タグの下に表示）。
-// TODO: Project 02・03 を実際の制作物に差し替える
+// TODO: Project 03 を実際の制作物に差し替える
 const WORKS: {
   no: string
   title: string
@@ -18,6 +18,16 @@ const WORKS: {
 }[] = [
   {
     no: '01',
+    title: '天気情報アプリ',
+    color: '#7c93ac',
+    image: '/images/works/weather-app.webp',
+    tags: ['TypeScript', 'Tailwind CSS', 'OpenWeather API'],
+    url: 'https://kudo-weather-app.vercel.app',
+    repo: 'https://github.com/kresamtau908-png/weather-app',
+    notes: ['TypeScriptと外部APIの課題として制作', '制作期間：約1週間'],
+  },
+  {
+    no: '02',
     title: 'ポケモン検索アプリ',
     color: '#7c93ac',
     image: '/images/works/pokemon-search.webp',
@@ -26,7 +36,6 @@ const WORKS: {
     repo: 'https://github.com/kresamtau908-png/pokemon-search',
     notes: ['TypeScriptと外部APIの扱いを学ぶため、自主制作', '制作期間：約2週間'],
   },
-  { no: '02', title: 'Project 02', color: '#8a7a63', image: undefined, tags: ['HTML', 'CSS', 'JavaScript'] },
   { no: '03', title: 'Project 03', color: '#3d4f6b', image: undefined, tags: ['React', 'Tailwind CSS'] },
 ]
 
