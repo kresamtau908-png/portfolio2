@@ -108,7 +108,8 @@ body {
   to { transform: translateX(-50%); }
 }
 .animate-works-scroll {
-  animation: works-scroll 52s linear infinite;
+  /* カード列は4セット並べて半分(2セット分)流すので、1セットあたり26秒の速さ */
+  animation: works-scroll 104s linear infinite;
 }
 .group:hover .animate-works-scroll {
   animation-play-state: paused;

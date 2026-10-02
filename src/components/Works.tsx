@@ -5,7 +5,6 @@ import WorkSlideCard from './WorkSlideCard'
 // （public/images/works/ に置く）。未指定の間は「Coming soon」のプレースホルダーを表示する。
 // url（公開サイト）・repo（ソースコード）を指定すると、カードからそれぞれ別タブで開ける。
 // notes には制作の経緯や期間などを短い箇条書きで入れる（タグの下に表示）。
-// TODO: Project 03 を実際の制作物に差し替える
 const WORKS: {
   no: string
   title: string
@@ -18,6 +17,16 @@ const WORKS: {
 }[] = [
   {
     no: '01',
+    title: '接待〇✕ゲーム',
+    color: '#7c93ac',
+    image: '/images/works/tic-tac-toe-ai.webp',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    url: 'https://tic-tac-toe-ai-rho-gray.vercel.app/',
+    repo: 'https://github.com/kresamtau908-png/tic-tac-toe-ai',
+    notes: ['JavaScriptの練習のため制作', '制作期間：約3日'],
+  },
+  {
+    no: '02',
     title: '天気情報アプリ',
     color: '#7c93ac',
     image: '/images/works/weather-app.webp',
@@ -27,7 +36,7 @@ const WORKS: {
     notes: ['TypeScriptと外部APIの課題として制作', '制作期間：約1週間'],
   },
   {
-    no: '02',
+    no: '03',
     title: 'ポケモン検索アプリ',
     color: '#7c93ac',
     image: '/images/works/pokemon-search.webp',
@@ -36,11 +45,11 @@ const WORKS: {
     repo: 'https://github.com/kresamtau908-png/pokemon-search',
     notes: ['TypeScriptと外部APIの扱いを学ぶため、自主制作', '制作期間：約2週間'],
   },
-  { no: '03', title: 'Project 03', color: '#3d4f6b', image: undefined, tags: ['React', 'Tailwind CSS'] },
 ]
 
-// 継ぎ目なくループさせるため、カード列を2セット並べる
-const TRACK = [...WORKS, ...WORKS]
+// 継ぎ目なくループさせるため、カード列を複数セット並べる（アニメーションで半分＝2セット分だけ流す）。
+// 2セットだとカードが少ないときに列の長さが画面幅に足りず、ループの切れ目で右端に空白ができるため4セットにしている
+const TRACK = [...WORKS, ...WORKS, ...WORKS, ...WORKS]
 
 export default function Works() {
   return (
