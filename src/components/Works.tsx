@@ -1,5 +1,6 @@
 import RevealText from './RevealText'
 import WorkSlideCard from './WorkSlideCard'
+import { useMarquee } from '../hooks/useMarquee'
 
 // image に完成ページのスクリーンショットのパスを指定するとカードの画像部分に反映される
 // （public/images/works/ に置く）。未指定の間は「Coming soon」のプレースホルダーを表示する。
@@ -47,11 +48,13 @@ const WORKS: {
   },
 ]
 
-// 継ぎ目なくループさせるため、カード列を複数セット並べる（アニメーションで半分＝2セット分だけ流す）。
-// 2セットだとカードが少ないときに列の長さが画面幅に足りず、ループの切れ目で右端に空白ができるため4セットにしている
+// 継ぎ目なくループさせるため、カード列を複数セット並べる（1セット分ずれたら位置を戻す）。
+// カードが少なくても、ループの切れ目で画面の右端に空白ができないよう4セット並べている
 const TRACK = [...WORKS, ...WORKS, ...WORKS, ...WORKS]
 
 export default function Works() {
+  const { viewportRef, trackRef } = useMarquee(WORKS.length)
+
   return (
     <section id="works" className="relative overflow-hidden bg-ink py-28 text-cream nav:py-[12vw]">
       <div className="layout-grid mb-16 nav:mb-[5vw]">
@@ -66,20 +69,27 @@ export default function Works() {
         </div>
       </div>
 
-      <div className="group overflow-hidden py-4 nav:py-[1vw]">
-        <div className="animate-works-scroll flex w-max gap-14 nav:gap-[5vw]">
+      {/* マウスを乗せたカードが拡大・浮き上がっても上下が切れないよう、上下に余白を取る。
+          カードの上では減速して止まり、ドラッグ・スワイプで左右に動かせる（useMarquee）。
+          touch-pan-y で、スマホの縦スクロールはそのままブラウザに任せる */}
+      <div
+        ref={viewportRef}
+        className="touch-pan-y overflow-hidden py-8 select-none nav:cursor-grab nav:py-[2vw] data-dragging:nav:cursor-grabbing"
+      >
+        <div ref={trackRef} className="flex w-max gap-14 will-change-transform nav:gap-[5vw]">
           {TRACK.map((work, i) => (
-            <WorkSlideCard
-              key={`${work.no}-${i}`}
-              no={work.no}
-              title={work.title}
-              color={work.color}
-              image={work.image}
-              tags={work.tags}
-              url={work.url}
-              repo={work.repo}
-              notes={work.notes}
-            />
+            <div key={`${work.no}-${i}`} data-marquee-item className="shrink-0">
+              <WorkSlideCard
+                no={work.no}
+                title={work.title}
+                color={work.color}
+                image={work.image}
+                tags={work.tags}
+                url={work.url}
+                repo={work.repo}
+                notes={work.notes}
+              />
+            </div>
           ))}
         </div>
       </div>

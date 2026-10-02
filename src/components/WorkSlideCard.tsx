@@ -15,6 +15,7 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      draggable={false}
       className="text-p-x inline-flex items-center gap-1 border-b border-cream/30 text-cream/70 transition-colors hover:border-cream hover:text-cream"
     >
       {label}
@@ -27,11 +28,8 @@ export default function WorkSlideCard({ no, title, color, tags, image, url, repo
   const visual = (
     <div className="relative aspect-4/5 overflow-hidden rounded-[0.8vw]" style={{ backgroundColor: color }}>
       {image ? (
-        <img
-          src={image}
-          alt={title}
-          className="ease-brand absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
-        />
+        // カード列をドラッグで動かせるよう、画像・リンクのブラウザ標準のドラッグは無効にしておく
+        <img src={image} alt={title} draggable={false} className="absolute inset-0 h-full w-full object-cover" />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-p-x text-cream/40">Coming soon</span>
@@ -41,9 +39,10 @@ export default function WorkSlideCard({ no, title, color, tags, image, url, repo
   )
 
   return (
-    <div className="flex w-72 shrink-0 flex-col gap-5 nav:w-[24vw] nav:gap-[1.4vw]">
+    // マウスを乗せたカードだけ、少し拡大して上に持ち上げ、浮き上がって見えるようにする
+    <div className="ease-brand flex w-72 shrink-0 flex-col gap-5 transition-transform duration-500 hover:-translate-y-2 hover:scale-[1.04] nav:w-[24vw] nav:gap-[1.4vw]">
       {url ? (
-        <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`${title}を開く`} className="group/card">
+        <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`${title}を開く`} draggable={false}>
           {visual}
         </a>
       ) : (

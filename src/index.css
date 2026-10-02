@@ -103,18 +103,6 @@ body {
   animation: header-in 0.6s var(--ease-brand) 1.5s both;
 }
 
-@keyframes works-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-works-scroll {
-  /* カード列は4セット並べて半分(2セット分)流すので、1セットあたり26秒の速さ */
-  animation: works-scroll 104s linear infinite;
-}
-.group:hover .animate-works-scroll {
-  animation-play-state: paused;
-}
-
 @keyframes orbit-a {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(34px, 26px); }
