@@ -15,10 +15,15 @@ export default function Profile() {
           <span className="text-p-x text-ink/40">05</span>
           <span className="text-p-x tracking-[0.2em] text-ink/50">PROFILE</span>
         </div>
-        <h2 className="text-h2">
-          {/* TODO: 氏名に差し替える */}
-          <RevealText text="Your Name" />
-        </h2>
+        {/* 見出しはサイト全体に合わせてアルファベットで大きく出し、漢字とよみがなを下に小さく添える */}
+        <div className="flex flex-col gap-2 nav:gap-[0.6vw]">
+          <h2 className="text-h2">
+            <RevealText text="Chihiro Kudo" />
+          </h2>
+          <p className="text-p-l text-ink/60">
+            工藤 千拓<span className="ml-3 text-ink/40">くどう ちひろ</span>
+          </p>
+        </div>
         <p className="text-h5 font-normal text-ink/60">Front-end Developer</p>
         <p className="text-p-l max-w-xl text-ink/70">
           {/* TODO: 人柄が伝わる自己紹介文に差し替える */}

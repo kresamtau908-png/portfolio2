@@ -14,7 +14,7 @@ export default function About() {
           <RevealText text="Into Front-End." className="block" delay={0.1} />
         </h2>
         <p className="text-p-l max-w-xl text-ink/70">
-          Webとは関わりのない仕事からフロントエンドエンジニアを目指してキャリアチェンジしました
+          障害福祉サービスの法人での仕事を経て、未経験からフロントエンドエンジニアを目指しています
         </p>
         <p className="text-p-l max-w-xl border-l-2 border-lime pl-5 text-ink/70">
           退職後は「フロントエンドエンジニア養成科」で半年間学び現在は卒業を控えながら実践としてこのポートフォリオサイトを制作しています
