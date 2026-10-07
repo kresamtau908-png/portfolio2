@@ -62,7 +62,7 @@ const WORKS: {
     color: '#7c93ac',
     image: '/images/works/portfolio.png',
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Claude Code'],
-    // TODO: Vercel で公開したら url に公開URLを入れる
+    url: 'https://kudo-portfolio.vercel.app/',
     repo: 'https://github.com/kresamtau908-png/portfolio2',
     notes: ['AI活用実習の一環として、AI（Claude Code）と協働して制作', '制作期間：約3週間'],
   },
