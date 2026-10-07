@@ -15,7 +15,8 @@ export default function PillButton({ label, variant = 'light', className = '', o
         e.preventDefault()
         onClick?.()
       }}
-      className={`group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full px-6 text-p-x font-medium shadow-[0_0.32vw_0.52vw_rgba(0,0,0,0.04)] nav:h-[2.5vw] nav:px-[1.25vw] ${bg} ${className}`}
+      // スマホ幅ではヘッダー右側の枠が狭いため、左右の余白を詰めて押しつぶされない(shrink-0)ようにする
+      className={`group relative inline-flex h-10 shrink-0 items-center justify-center overflow-hidden rounded-full px-4 text-p-x font-medium shadow-[0_0.32vw_0.52vw_rgba(0,0,0,0.04)] nav:h-[2.5vw] nav:px-[1.25vw] ${bg} ${className}`}
     >
       <span className="ease-brand absolute left-1/2 top-1/2 z-0 h-0 w-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime transition-[width,height] duration-600 group-hover:h-[16vw] group-hover:w-[16vw]" />
       <span className="ease-brand relative z-10 whitespace-nowrap transition-transform duration-600 group-hover:-translate-x-1">

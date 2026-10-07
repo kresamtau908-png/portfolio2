@@ -27,8 +27,11 @@ function SkillItem({ name, note, index }: { name: string; note: string; index: n
       }}
     >
       <span className="text-p-x w-8 shrink-0 pt-1 text-ink/40">{String(index + 1).padStart(2, '0')}</span>
-      <span className="text-h5 w-38 shrink-0 font-medium nav:w-42">{name}</span>
-      <span className="text-p pt-1 text-ink/60">{note}</span>
+      {/* スマホ幅では説明文の欄が狭くなりすぎるので、スキル名の下に説明文を置く。PC幅では横に並べる */}
+      <div className="flex flex-col gap-1.5 nav:flex-row nav:gap-[1.5vw]">
+        <span className="text-h5 shrink-0 font-medium nav:w-42">{name}</span>
+        <span className="text-p text-ink/60 nav:pt-1">{note}</span>
+      </div>
     </div>
   )
 }
