@@ -46,6 +46,16 @@ const WORKS: {
     repo: 'https://github.com/kresamtau908-png/pokemon-search',
     notes: ['TypeScriptと外部APIの扱いを学ぶため、自主制作', '制作期間：約2週間'],
   },
+  {
+    no: '04',
+    title: 'BATTLE GAME',
+    color: '#7c93ac',
+    image: '/images/works/battle-game.webp',
+    tags: ['React', 'Vite', 'Tailwind CSS'],
+    url: 'https://battle-game-topaz.vercel.app/',
+    repo: 'https://github.com/kresamtau908-png/battle-game',
+    notes: ['Reactの練習として制作', '制作期間：約3週間'],
+  },
 ]
 
 // 継ぎ目なくループさせるため、カード列を複数セット並べる（1セット分ずれたら位置を戻す）。
